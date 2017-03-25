@@ -3,12 +3,16 @@
 @{
     ViewBag.Title = "Index";
 }
-
+@*@using (Html.BeginForm())
+{
+    @Html.DropDownList("Alunos", null, "Selecionar Alunos", new { @class="form-control"})
+}*@
 <h2>Constroi o teu futuro, vem estudar no IPT!</h2>
 
 <p>
     @Html.ActionLink("Inscreve-te", "NovoAluno")
 </p>
+
 @*<table class="table">
         <tr>
             <th>

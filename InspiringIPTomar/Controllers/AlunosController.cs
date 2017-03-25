@@ -11,7 +11,8 @@ namespace InspiringIPTomar.Controllers
         // GET: Alunos
         public ActionResult Index()
         {
-
+            //AlunoContext ac = new AlunoContext();
+            //ViewBag.Alunos = new SelectList(ac.Alunos, "AlunoID", "Nome");
             return View();
         }
 
