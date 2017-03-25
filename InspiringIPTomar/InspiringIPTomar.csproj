@@ -202,6 +202,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin_Login.cs" />
     <Compile Include="Models\Alunos.cs" />
@@ -271,6 +272,10 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Alunos\Index.cshtml" />
     <Content Include="Views\Alunos\NovoAluno.cshtml" />
+    <Content Include="Views\Home\SobreNos.cshtml" />
+    <Content Include="Views\Home\Cursos.cshtml" />
+    <Content Include="Views\Home\Noticias.cshtml" />
+    <Content Include="Views\Home\Agenda.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
