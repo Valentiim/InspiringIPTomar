@@ -21,7 +21,7 @@ namespace InspiringIPTomar.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection", throwIfV1Schema: true)
         {
         }
 
@@ -29,5 +29,9 @@ namespace InspiringIPTomar.Models
         {
             return new ApplicationDbContext();
         }
+
+        public virtual DbSet<Alunos> AlunosDB { get; set; }
+        public virtual DbSet<Funcionarios> FuncionariosDB { get; set; }
+        public virtual DbSet<Admin_Login> Admin_LoginDB { get; set; }
     }
 }
