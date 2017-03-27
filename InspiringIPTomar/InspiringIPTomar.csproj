@@ -283,13 +283,9 @@
     <Content Include="Views\Alunos\Edit.cshtml" />
     <Content Include="Views\Alunos\Listagem.cshtml" />
     <Content Include="Views\Alunos\Editar.cshtml" />
-    <Content Include="Views\Quartos\Index.cshtml" />
     <Content Include="Views\Actividades\Index.cshtml" />
-    <Content Include="Views\Quartos\Details.cshtml" />
     <Content Include="Views\Actividades\Details.cshtml" />
-    <Content Include="Views\Quartos\Create.cshtml" />
     <Content Include="Views\Actividades\Create.cshtml" />
-    <Content Include="Views\Quartos\Edit.cshtml" />
     <Content Include="Views\Actividades\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
