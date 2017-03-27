@@ -3,50 +3,80 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Inspiring Future IPTomar</title>
-    @Styles.Render("~/Content/css")
+    <title>@ViewBag.Title - Inspiring IPTomar</title>
+    @*@Styles.Render("~/Content/css")*@
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/bootstrap-datetimepicker.css")
+    @Styles.Render("~/Content/jquery-ui.min.css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+    @Scripts.Render("~/Scripts/jquery-ui-1.11.4.min.js")
+    @Styles.Render("~/Content/site.css")
+    <meta name="description" content="The description of my page" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top ">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Inspiring IPTomar", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div>
-                @Html.ActionLink("INSCRIÇÃO", "Index", "Alunos", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Sobre nós", "SobreNos", "Home")</li>
-                    <li>@Html.ActionLink("Cursos", "Cursos", "Home")</li>
-                    <li>@Html.ActionLink("Notícias", "Noticias", "Home")</li>
-                    <li>@Html.ActionLink("Agenda", "Agenda", "Home")</li>
-                    <li>@Html.ActionLink("Contato", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ipt<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Sobre Nós", "About", "Home")</li>
+                            <li>@Html.ActionLink("O Descrever", "Ipt", "Home")</li>
+                            <li>@Html.ActionLink("Actividades", "Index", "Actividades")</li>
+                        </ul>
+                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Alunos<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+
+                                <li>@Html.ActionLink("Alterar Perfil", "Editar", "Alunos")</li>
+                                <li>@Html.ActionLink("Alterar Password", "Index", "Manage")</li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("Funcionarios"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administração<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Lista de Alunos", "Listagem", "Alunos")</li>
+                                <li>@Html.ActionLink("Categoria das Actividades", "Index", "Actividades")</li>
+                            </ul>
+                        </li>
+                    }
+                    <li>@Html.ActionLink("Contactos", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="background-color:#FFFFFF">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Inspiring Future IPT</p>
+            <p>&copy; @DateTime.Now.Year - Inspiring IPTomar </p>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/jquery-ui.js")
+    @Scripts.Render("~/Scripts/moment.js")
+    @Scripts.Render("~/Scripts/bootstrap-datetimepicker.js")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/Scripts/Apoio.js")
+    @Scripts.Render("~/Scripts/jspdf.js")
+    @Scripts.Render("~/Scripts/pdfFromHTML.js")
 </body>
 </html>

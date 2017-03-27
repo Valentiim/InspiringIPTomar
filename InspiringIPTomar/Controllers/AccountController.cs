@@ -15,6 +15,8 @@ namespace InspiringIPTomar.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        //Guardar Valores na Base de Dados
+        private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -22,7 +24,7 @@ namespace InspiringIPTomar.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +36,9 @@ namespace InspiringIPTomar.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -75,10 +77,28 @@ namespace InspiringIPTomar.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+
+            // Require the user to have a confirmed email before they can log on.
+            //var user = await UserManager.FindByNameAsync(model.Email);
+            var user = UserManager.Find(model.Email, model.Password);
+            if (user != null)
+            {
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))//Envia a confirmação de email
+                {
+                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
+                    //mensagem de Erro que aparece no Erro
+                    ViewBag.errorMessage = "Deverá confirmar a password no seu e-mail. "
+                              + "Enviamos neste Momento um novo pedido de Confirmação.";
+                    return View("Error");
+                }
+            }
+
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            TempData["is"] = "Iniciar Sessão";
             switch (result)
             {
                 case SignInStatus.Success:
+                    TempData["LogSuccess"] = "Login efectuado com sucesso";
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -86,54 +106,10 @@ namespace InspiringIPTomar.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    TempData["LogErro"] = "Existiu um erro! Verifique se introduziu os dados correctamente";
                     return View(model);
             }
         }
-
-        //
-        // GET: /Account/VerifyCode
-        [AllowAnonymous]
-        public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
-        {
-            // Require that the user has already logged in via username/password or external login
-            if (!await SignInManager.HasBeenVerifiedAsync())
-            {
-                return View("Error");
-            }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
-        }
-
-        //
-        // POST: /Account/VerifyCode
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            // The following code protects for brute force attacks against the two factor codes. 
-            // If a user enters incorrect codes for a specified amount of time then the user account 
-            // will be locked out for a specified amount of time. 
-            // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid code.");
-                    return View(model);
-            }
-        }
-
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -147,28 +123,49 @@ namespace InspiringIPTomar.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, Alunos a)
         {
+            TempData["Reg"] = "Registo";
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    TempData["RegSuccess"] = "Registo Efectuado com Sucesso";
+                    var aluno = new Alunos
+                    {
+                        UserID = user.Id,
+                        NomeCompleto = a.NomeCompleto,
+                        Concelho = a.Concelho,
+                        Email = a.Email,
+                        Contacto = a.Contacto,
+                        Sexo = a.Sexo,
+                        DataNascimento = a.DataNascimento,
+                        HabAcademicas = a.HabAcademicas,
+                        InforSobre = a.InforSobre,
+                        AreasInteresse = a.AreasInteresse,
                     
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    };
+                    //mantém a Sessão iniciada
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    //Pré-Define uma role ao utilizador
+                    await UserManager.AddToRoleAsync(user.Id, "Alunos");
+                    //Guarda os dados do cliente na Base de Dados
+                    db.Alunos.Add(aluno);
+                    db.SaveChanges();
+                    //Envia o E-mail de Confirmação para o email do User ID
+                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirmar E-Mail");
+                    //mensagem que aparece na página Info
+                    ViewBag.Message = "Por Favor Verifique o E-mail para activar a Conta "
+                         + "Depois inicie a sessão.";
+                    //return RedirectToAction("Perfil", "Clientes");
+                    return View("Info");
                 }
+                //Caso Exita erro aparece mensagem de erro no registo
+                TempData["RegErro"] = "Verifique se os dados Correctos!";
                 AddErrors(result);
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
@@ -177,11 +174,15 @@ namespace InspiringIPTomar.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
+            //se o User ID for nulo ou o code
             if (userId == null || code == null)
             {
+                //aparece a View de Erro
                 return View("Error");
             }
+            //associa um um id ao codigo
             var result = await UserManager.ConfirmEmailAsync(userId, code);
+            //caso exista sucesso abre o Confirmar e-mail se não abre o de Erro
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
@@ -200,6 +201,7 @@ namespace InspiringIPTomar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
+            //Verifica se o model é valido
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
@@ -208,16 +210,16 @@ namespace InspiringIPTomar.Controllers
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
-
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                //Gera token de reset à password
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                //gera link da passord7                
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                //Envia o email de Reset da password ao utilizador
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Clique <a href=\"" + callbackUrl + "\">aqui</a> paea Efectuar Reset à password");
+                //Redireciona para a confirmação
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
-
-            // If we got this far, something failed, redisplay form
+            //se falhar retorna a view
             return View(model);
         }
 
@@ -392,6 +394,8 @@ namespace InspiringIPTomar.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            TempData["is"] = "Terminar sessão";
+            TempData["LogSuccess"] = "Terminou sessão com sucesso!";
             return RedirectToAction("Index", "Home");
         }
 
@@ -401,6 +405,19 @@ namespace InspiringIPTomar.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
+        }
+        //Envia o E-mail de confirmação
+        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
+        {
+            //Gera o email para o user ID
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
+            //Gera o Link a enviar no email
+            var callbackUrl = Url.Action("ConfirmEmail", "Account",
+               new { userId = userID, code = code }, protocol: Request.Url.Scheme);
+            //Envia e-mail para a confirmação da conta
+            await UserManager.SendEmailAsync(userID, subject,
+               "Para confirmar a conta Clique <a href=\"" + callbackUrl + "\">aqui</a>");
+            return callbackUrl;
         }
 
         protected override void Dispose(bool disposing)

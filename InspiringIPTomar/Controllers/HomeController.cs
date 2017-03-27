@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InspiringIPTomar.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,43 +9,30 @@ namespace InspiringIPTomar.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
 
-
-        public ActionResult Index()
+        public ActionResult notFound()
         {
-            ViewBag.Title = "Notícias do IPT";
-
-            return View();
+            return RedirectToAction("Index", "Home");
+            //return View();
         }
-
-        public ActionResult SobreNos(string a)
+        public ActionResult About()
         {
-            ViewBag.Title = "Sobre nós";
-
-            return View();
-        }
-        public ActionResult Cursos(string a)
-        {
-            ViewBag.Title = "Cursos do IPT";
-
-            return View();
-        }
-        public ActionResult Noticias(string a)
-        {
-            ViewBag.Title = "Notícias do IPT";
-
-            return View();
-        }
-        public ActionResult Agenda(string a)
-        {
-            ViewBag.Title = "Agenda do IPT";
+            ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Veja aqui os Contactos.";
+
+            return View();
+        }
+
+        public ActionResult Ipt()
+        {
+            ViewBag.Message = "Saiba quem somos.";
 
             return View();
         }

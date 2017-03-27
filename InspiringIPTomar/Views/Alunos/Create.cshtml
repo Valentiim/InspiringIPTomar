@@ -1,0 +1,141 @@
+﻿@model InspiringIPTomar.Models.Alunos
+
+@{
+    ViewBag.Title = "Dados do Aluno";
+}
+<div class="col-md-6">
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NomeCompleto, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-8">
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-user"></i>
+                </span>
+                @Html.TextBoxFor(m => m.NomeCompleto, new { @class = "form-control input-group" })
+            </div>
+            @Html.ValidationMessageFor(m => m.NomeCompleto, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Concelho, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-8">
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-home"></i>
+                </span>
+                @Html.TextBoxFor(m => m.Concelho, new { @class = "form-control input-group" })
+            </div>
+            @Html.ValidationMessageFor(m => m.Concelho, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-8">
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-envelope"></i>
+                </span>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-group" })
+            </div>
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Contacto, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-8">
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-phone"></i>
+                </span>
+                @Html.TextBoxFor(m => m.Contacto, new { @class = "form-control input-group" })
+            </div>
+            @Html.ValidationMessageFor(m => m.Contacto, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Sexo, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-8">
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-user"></i>
+                </span>
+                @Html.TextBoxFor(m => m.Sexo, new { @class = "form-control input-group" })
+            </div>
+            @Html.ValidationMessageFor(m => m.Sexo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DataNascimento, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-8">
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-time"></i>
+                </span>
+                @Html.TextBoxFor(m => m.DataNascimento, new { @class = "form-control input-group" })
+            </div>
+            @Html.ValidationMessageFor(m => m.DataNascimento, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="form-group">
+        @Html.LabelFor(model => model.HabAcademicas, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-home"></i>
+                </span>
+                @Html.TextBoxFor(m => m.HabAcademicas, new { @class = "form-control input-group" })
+            </div>
+            @Html.ValidationMessageFor(m => m.HabAcademicas, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+       @Html.LabelFor(model => model.InforSobre, htmlAttributes: new { @class = "control-label col-md-4" })
+    <div class="col-md-8">
+        <div style="margin-bottom: 25px" class="input-group">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-home"></i>
+            </span>
+            @Html.TextBoxFor(m => m.InforSobre, new { @class = "form-control input-group" })
+        </div>
+        @Html.ValidationMessageFor(m => m.InforSobre, "", new { @class = "text-danger" })
+    </div>
+    </div>
+
+    <div class="form-group">
+       @Html.LabelFor(model => model.AreasInteresse, htmlAttributes: new { @class = "control-label col-md-4" })
+    <div class="col-md-8">
+        <div style="margin-bottom: 25px" class="input-group">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-home"></i>
+            </span>
+            @Html.TextBoxFor(m => m.AreasInteresse, new { @class = "form-control input-group" })
+        </div>
+        @Html.ValidationMessageFor(m => m.AreasInteresse, "", new { @class = "text-danger" })
+    </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Observacoes, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-8">
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-home"></i>
+                </span>
+                @Html.TextBoxFor(m => m.Observacoes, new { @class = "form-control input-group" })
+            </div>
+            @Html.ValidationMessageFor(m => m.Observacoes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+  </div>

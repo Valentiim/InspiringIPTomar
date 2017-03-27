@@ -1,0 +1,29 @@
+﻿@model InspiringIPTomar.Models.Actividades
+
+@{
+    ViewBag.Title = "Detalhes das Actividades";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="page-header">@ViewBag.Title Inspiring IPTomar </h2>
+    </div>
+    <div class="col-md-6">
+        <h3>@Html.DisplayFor(model => model.TipoActividade)</h3>
+        <div class="col-md-12" style="text-align:justify">
+            <p>@Html.DisplayFor(model => model.Descricao)</p>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-12 col-md-offset-2">
+                @Html.ActionLink("Ver Actividades", "Index", "", new { @class = "btn btn-primary" })
+                @if (User.IsInRole("Funcionarios"))
+                {
+                    @Html.ActionLink("Alterar Actividades", "Edit", new { id = Model.ActividadeID }, new { @class = "btn btn-warning" })
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <img style="width:550px" src="~/Images/@ViewBag.img" />
+    </div>
+</div>

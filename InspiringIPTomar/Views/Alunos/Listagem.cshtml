@@ -1,0 +1,84 @@
+﻿@model IEnumerable<InspiringIPTomar.Models.ListagemAlunos>
+
+@{
+    ViewBag.Title = "Listagem";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="page-header">@ViewBag.Title Inspiring IPTomar</h2>
+    </div>
+    <div class="col-md-12">
+        <table class="table">
+            <tr>
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Concelho)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EMAIL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Contacto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sexo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Data_Nascimento)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Habilitacoes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Informacoes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Areas)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Obs)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                   
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Concelho) @Html.DisplayFor(modelItem => item.Contacto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EMAIL)@Html.DisplayFor(modelItem => item.Data_Nascimento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sexo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Habilitacoes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Informacoes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Areas)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Obs)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Alterar", "Edit", new { id = item.AlunoID }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Detalhes", "Details", new { id = item.AlunoID }, new { @class = "btn btn-info" })
+                    </td>
+                </tr>
+            }
+        </table>
+     </div>
+   </div>
+

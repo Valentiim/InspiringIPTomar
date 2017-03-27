@@ -1,25 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using InspiringIPTomar.Models;
+using System.Net;
+using System.Configuration;
+using System.Diagnostics;
+using Microsoft;
 
 namespace InspiringIPTomar
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            await configSendGridasync(message);
+        }
+
+        // Use NuGet to install SendGrid (Basic C# client lib) 
+        private async Task configSendGridasync(IdentityMessage message)
+        {
+            var myMessage = new SendGridMessage();
+            myMessage.AddTo(message.Destination);
+            myMessage.From = new System.Net.Mail.MailAddress(
+                                "arrua.afonso@gmail.com", "Inspiring IPTomar");
+            myMessage.Subject = message.Subject;
+            myMessage.Text = message.Body;
+            myMessage.Html = message.Body;
+
+            var credentials = new NetworkCredential(
+                       ConfigurationManager.AppSettings["mailAccount"],
+                       ConfigurationManager.AppSettings["mailPassword"]
+                       );
+
+            // Cria a Web transport para enviar email.
+            var transportWeb = new web(credentials);
+            // Envia o E-mail
+            try
+            {
+                if (transportWeb != null)
+                {
+                    //envia a Mensagem
+                    await transportWeb.DeliverAsync(myMessage);
+                }
+                else
+                {
+                    //Falha ao enviar a mensagem
+                    Trace.TraceError("Falha ao criar Web transport.");
+                    await Task.FromResult(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.Message + "Sengrid não está a funcionar.");
+            }
         }
     }
 
@@ -40,7 +78,7 @@ namespace InspiringIPTomar
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
@@ -81,7 +119,7 @@ namespace InspiringIPTomar
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
+                manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;

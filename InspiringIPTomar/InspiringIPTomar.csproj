@@ -194,21 +194,23 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SendGridMessage.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AlunoContext.cs" />
+    <Compile Include="Controllers\ActividadesController.cs" />
     <Compile Include="Controllers\AlunosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Microsoft\web.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Admin_Login.cs" />
+    <Compile Include="Models\Actividades.cs" />
     <Compile Include="Models\Alunos.cs" />
-    <Compile Include="Models\Funcionarios.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ListagemAlunos.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -275,12 +277,20 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Alunos\Index.cshtml" />
-    <Content Include="Views\Alunos\NovoAluno.cshtml" />
-    <Content Include="Views\Home\SobreNos.cshtml" />
-    <Content Include="Views\Home\Cursos.cshtml" />
-    <Content Include="Views\Home\Noticias.cshtml" />
-    <Content Include="Views\Home\Agenda.cshtml" />
+    <Content Include="Views\Alunos\Perfil.cshtml" />
+    <Content Include="Views\Alunos\Details.cshtml" />
+    <Content Include="Views\Alunos\Create.cshtml" />
+    <Content Include="Views\Alunos\Edit.cshtml" />
+    <Content Include="Views\Alunos\Listagem.cshtml" />
+    <Content Include="Views\Alunos\Editar.cshtml" />
+    <Content Include="Views\Quartos\Index.cshtml" />
+    <Content Include="Views\Actividades\Index.cshtml" />
+    <Content Include="Views\Quartos\Details.cshtml" />
+    <Content Include="Views\Actividades\Details.cshtml" />
+    <Content Include="Views\Quartos\Create.cshtml" />
+    <Content Include="Views\Actividades\Create.cshtml" />
+    <Content Include="Views\Quartos\Edit.cshtml" />
+    <Content Include="Views\Actividades\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
