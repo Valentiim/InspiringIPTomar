@@ -10,7 +10,7 @@ using InspiringIPTomar.Models;
 
 namespace InspiringIPTomar.Controllers
 {
-    public class QuartosController : Controller
+    public class ActividadesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
