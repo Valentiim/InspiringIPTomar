@@ -197,7 +197,7 @@
     <Compile Include="App_Start\SendGridMessage.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ActividadesController.cs" />
+    <Compile Include="Controllers\CursosController.cs" />
     <Compile Include="Controllers\AlunosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -207,7 +207,7 @@
     <Compile Include="Microsoft\web.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Actividades.cs" />
+    <Compile Include="Models\Cursos.cs" />
     <Compile Include="Models\Alunos.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ListagemAlunos.cs" />
@@ -216,9 +216,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-InspiringIPTomar-20170325063245.mdf" />
-    <Content Include="App_Data\aspnet-InspiringIPTomar-20170325063245_log.ldf">
-      <DependentUpon>aspnet-InspiringIPTomar-20170325063245.mdf</DependentUpon>
+    <Content Include="App_Data\aspnet-InspiringIPTomar-DB.mdf" />
+    <Content Include="App_Data\aspnet-InspiringIPTomar-DB_log.ldf">
+      <DependentUpon>aspnet-InspiringIPTomar-DB.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -243,7 +243,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -283,10 +285,10 @@
     <Content Include="Views\Alunos\Edit.cshtml" />
     <Content Include="Views\Alunos\Listagem.cshtml" />
     <Content Include="Views\Alunos\Editar.cshtml" />
-    <Content Include="Views\Actividades\Index.cshtml" />
-    <Content Include="Views\Actividades\Details.cshtml" />
-    <Content Include="Views\Actividades\Create.cshtml" />
-    <Content Include="Views\Actividades\Edit.cshtml" />
+    <Content Include="Views\Cursos\Index.cshtml" />
+    <Content Include="Views\Cursos\Details.cshtml" />
+    <Content Include="Views\Cursos\Create.cshtml" />
+    <Content Include="Views\Cursos\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

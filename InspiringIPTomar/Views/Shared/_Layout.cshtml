@@ -31,8 +31,8 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ipt<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Sobre Nós", "About", "Home")</li>
-                            <li>@Html.ActionLink("O Descrever", "Ipt", "Home")</li>
-                            <li>@Html.ActionLink("Actividades", "Index", "Actividades")</li>
+                            <li>@Html.ActionLink("A Descrever", "Ipt", "Home")</li>
+                            <li>@Html.ActionLink("Cursos", "Index", "Cursos")</li>
                         </ul>
                     </li>
                     @if (User.Identity.IsAuthenticated)
@@ -49,10 +49,10 @@
                     @if (User.IsInRole("Funcionarios"))
                     {
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administração<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrador<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Lista de Alunos", "Listagem", "Alunos")</li>
-                                <li>@Html.ActionLink("Categoria das Actividades", "Index", "Actividades")</li>
+                                <li>@Html.ActionLink("Lista dos Alunos", "Listagem", "Alunos")</li>
+                                <li>@Html.ActionLink("Categoria dos Cursos", "Index", "Cursos")</li>
                             </ul>
                         </li>
                     }

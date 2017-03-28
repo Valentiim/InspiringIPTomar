@@ -10,29 +10,29 @@ using InspiringIPTomar.Models;
 
 namespace InspiringIPTomar.Controllers
 {
-    public class ActividadesController : Controller
+    public class CursosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Actividades        
+        // GET: Cursos        
         public ActionResult Index()
         {
-            return View(db.Actividades.OrderByDescending(m => m.TipoActividade).ToList());
+            return View(db.Cursos.OrderByDescending(m => m.TipoCurso).ToList());
         }
 
-        // GET: Actividades/Details/5
+        // GET: Cursos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            Actividades actividades = db.Actividades.Find(id);
-            if (actividades == null)
+            Cursos cursos = db.Cursos.Find(id);
+            if (cursos == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            var nomeIMG = (from act in db.Actividades where id == act.ActividadeID select act.ImagePath).Single();
+            var nomeIMG = (from act in db.Cursos where id == act.CursoID select act.ImagePath).Single();
             if (nomeIMG == null)
             {
                 ViewBag.img = "image-not-found.jpg";
@@ -41,77 +41,77 @@ namespace InspiringIPTomar.Controllers
             {
                 ViewBag.img = nomeIMG;
             }
-            return View(actividades);
+            return View(cursos);
         }
 
-        // GET: Actividades/Create
+        // GET: Cursos/Create
         [Authorize(Roles = "Funcionarios")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Quartos/Create
+        // POST: Cursos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Funcionarios")]
-        public ActionResult Create([Bind(Include = "ActividadeID,TipoActividade,Descricao,ImagePath")]Actividades actividades, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "CursoID,TipoCurso,Curso,Descricao,ImagePath")]Cursos cursos, HttpPostedFileBase file)
         {
-            TempData["CA"] = "Categoria das Actividades";
+            TempData["CQ"] = "Categoria dos Cursos";
             if (ModelState.IsValid)
             {
                 if (file != null)
                 {
                     file.SaveAs(HttpContext.Server.MapPath("~/Images/")
                                                           + file.FileName);
-                    actividades.ImagePath = file.FileName;
+                    cursos.ImagePath = file.FileName;
                 }
                
                 return RedirectToAction("Index");
             }
            
-            return View(actividades);
+            return View(cursos);
         }
         [Authorize(Roles = "Funcionarios")]
-        // GET: Actividades/Edit/5
+        // GET: Cursos/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            Actividades actividades = db.Actividades.Find(id);
-            if (actividades == null)
+            Cursos cursos = db.Cursos.Find(id);
+            if (cursos == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            return View(actividades);
+            return View(cursos);
         }
         [Authorize(Roles = "Funcionarios")]
-        // POST: Quartos/Edit/5
+        // POST: Cursos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Funcionarios")]
-        public ActionResult Edit([Bind(Include = "ActividadeID,TipoActividade,Descricao,ImagePath")] Actividades actividades, HttpPostedFileBase file)
+        public ActionResult Edit([Bind(Include = "CursoID,TipoCurso,Curso,Descricao,ImagePath")] Cursos cursos, HttpPostedFileBase file)
         {
-            TempData["CA"] = "Categoria das Actividades";
+            TempData["CQ"] = "Categoria dos Cursos";
             if (ModelState.IsValid)
             {
                 if (file != null)
                 {
                     file.SaveAs(HttpContext.Server.MapPath("~/Images/")
                                                           + file.FileName);
-                    actividades.ImagePath = file.FileName;
+                    cursos.ImagePath = file.FileName;
                 }
               
                 return RedirectToAction("Index");
             }
            
-            return View(actividades);
+            return View(cursos);
         }
         protected override void Dispose(bool disposing)
         {

@@ -1,4 +1,4 @@
-﻿@model InspiringIPTomar.Models.Actividades
+﻿@model InspiringIPTomar.Models.Cursos
 
 @{
     ViewBag.Title = "Details";
@@ -7,15 +7,23 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Actividades</h4>
+    <h4>Cursos</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TipoActividade)
+            @Html.DisplayNameFor(model => model.TipoCurso)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TipoActividade)
+            @Html.DisplayFor(model => model.TipoCurso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Curso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Curso)
         </dd>
 
         <dt>
@@ -37,6 +45,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ActividadeID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CursoID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

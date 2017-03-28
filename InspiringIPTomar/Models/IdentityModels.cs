@@ -30,7 +30,7 @@ namespace InspiringIPTomar.Models
             return new ApplicationDbContext();
         }
         public System.Data.Entity.DbSet<InspiringIPTomar.Models.Alunos> Alunos { get; set; }
-        public System.Data.Entity.DbSet<InspiringIPTomar.Models.Actividades> Actividades { get; set; }
+        public System.Data.Entity.DbSet<InspiringIPTomar.Models.Cursos> Cursos { get; set; }
 
 
 

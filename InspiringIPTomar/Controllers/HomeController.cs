@@ -11,11 +11,6 @@ namespace InspiringIPTomar.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public ActionResult notFound()
-        {
-            return RedirectToAction("Index", "Home");
-            //return View();
-        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

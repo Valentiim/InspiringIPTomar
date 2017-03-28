@@ -215,7 +215,7 @@ namespace InspiringIPTomar.Controllers
                 //gera link da passord7                
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 //Envia o email de Reset da password ao utilizador
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Clique <a href=\"" + callbackUrl + "\">aqui</a> paea Efectuar Reset à password");
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Clique <a href=\"" + callbackUrl + "\">aqui</a> para efectuar reset à password");
                 //Redireciona para a confirmação
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
